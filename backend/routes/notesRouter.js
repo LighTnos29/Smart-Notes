@@ -1,7 +1,10 @@
 const express = require('express')
-const { createNotes } = require('../controllers/notesController')
+const { createNotes ,allNotes } = require('../controllers/notesController')
 const router = express.Router()
+const isLoggedin = require("../middlewares/isLoggedin")
 
-router.post("/create",createNotes)
+router.post("/create", isLoggedin, createNotes)
+router.get("/allnotes",isLoggedin,allNotes)
+
 
 module.exports = router
