@@ -37,13 +37,13 @@ module.exports.loginUser = async function (req, res) {
         if (!user) {
             return res.status(400).json({ message: "User not found." })
         }
-        bcrypt.compare(password, user.password, function (err, result) {
+        await bcrypt.compare(password, user.password, function (err, result) {
             if (result) {
                 let token = generateToken(user)
                 res.cookie("token", token)
                 res.status(200).json({ message: "Login successful", token })
             } else {
-                res.status(401).json({ message: "Email or password incorrect." })
+                res.status(401).json({ message: "Email or password incorrect.",err })
             }
         });
 
